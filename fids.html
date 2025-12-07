@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Departures</title>
+<style>
+    body { background: #001428; font-family: Arial; color: white; margin: 0; }
+    .header {
+        background: linear-gradient(to right, #003366, #0055a5);
+        padding: 20px; text-align: center; font-size: 30px; font-weight: bold;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 20px; }
+    th { background: #003366; padding: 10px; }
+    td { padding: 10px; text-align: center; border-bottom: 1px solid #004a80; }
+    tr:nth-child(even) { background: #02223d; }
+    tr:nth-child(odd) { background: #012034; }
+
+    .airline-badge {
+        width: 40px; height: 40px; border-radius: 8px; display: inline-flex;
+        align-items: center; justify-content: center; font-weight: bold; color: #fff;
+    }
+    .QR { background: #7a003c; }
+    .EK { background: #d71921; }
+    .EY { background: #b38b00; }
+    .SV { background: #006c35; }
+    .FZ { background: #ff6a00; }
+    .WY { background: #007c92; }
+    .KU { background: #004f9f; }
+    .GF { background: #c9a14a; }
+    .RJ { background: #a32035; }
+    .ME { background: #006f3e; }
+    .MS { background: #0b3c7c; }
+
+    .status {
+        padding: 4px 10px; border-radius: 50px; font-weight: bold;
+    }
+    .on-time { color: #00ff9d; border: 1px solid #00ff9d; }
+    .delayed { color: #ff6b6b; border: 1px solid #ff6b6b; }
+    .boarding { color: #4db8ff; border: 1px solid #4db8ff; }
+    .last-call { color: #ffd166; border: 1px solid #ffd166; }
+</style>
+</head>
+<body>
+
+<div class="header">DEPARTURES</div>
+
+<table>
+<tr><th>Airline</th><th>Flight</th><th>Destination</th><th>Time</th><th>Gate</th><th>Status</th></tr>
+
+<tr><td><span class="airline-badge QR">QR</span> Qatar Airways</td><td>QR404</td><td>Doha</td><td>08:10</td><td>A12</td><td><span class="status on-time">On Time</span></td></tr>
+<tr><td><span class="airline-badge EK">EK</span> Emirates</td><td>EK202</td><td>Dubai</td><td>08:35</td><td>B7</td><td><span class="status boarding">Boarding</span></td></tr>
+<tr><td><span class="airline-badge EY">EY</span> Etihad Airways</td><td>EY315</td><td>Abu Dhabi</td><td>09:05</td><td>C3</td><td><span class="status on-time">On Time</span></td></tr>
+<tr><td><span class="airline-badge SV">SV</span> Saudia</td><td>SV820</td><td>Riyadh</td><td>09:30</td><td>D4</td><td><span class="status on-time">On Time</span></td></tr>
+<tr><td><span class="airline-badge FZ">FZ</span> flydubai</td><td>FZ141</td><td>Kuwait City</td><td>09:45</td><td>E2</td><td><span class="status delayed">Delayed</span></td></tr>
+<tr><td><span class="airline-badge WY">WY</span> Oman Air</td><td>WY602</td><td>Muscat</td><td>10:05</td><td>A4</td><td><span class="status on-time">On Time</span></td></tr>
+<tr><td><span class="airline-badge KU">KU</span> Kuwait Airways</td><td>KU674</td><td>Kuwait</td><td>10:20</td><td>B3</td><td><span class="status on-time">On Time</span></td></tr>
+<tr><td><span class="airline-badge GF">GF</span> Gulf Air</td><td>GF215</td><td>Manama</td><td>10:40</td><td>C1</td><td><span class="status boarding">Boarding</span></td></tr>
+<tr><td><span class="airline-badge RJ">RJ</span> Royal Jordanian</td><td>RJ115</td><td>Amman</td><td>11:00</td><td>D1</td><td><span class="status last-call">Last Call</span></td></tr>
+<tr><td><span class="airline-badge ME">ME</span> MEA</td><td>ME403</td><td>Beirut</td><td>11:20</td><td>A6</td><td><span class="status on-time">On Time</span></td></tr>
+
+<tr><td><span class="airline-badge MS">MS</span> EgyptAir</td><td>MS912</td><td>Cairo</td><td>11:40</td><td>C7</td><td><span class="status delayed">Delayed</span></td></tr>
+<tr><td><span class="airline-badge QR">QR</span> Qatar Airways</td><td>QR812</td><td>Doha</td><td>12:05</td><td>A10</td><td><span class="status on-time">On Time</span></td></tr>
+<tr><td><span class="airline-badge EK">EK</span> Emirates</td><td>EK732</td><td>Jeddah</td><td>12:20</td><td>B2</td><td><span class="status boarding">Boarding</span></td></tr>
+<tr><td><span class="airline-badge EY">EY</span> Etihad Airways</td><td>EY417</td><td>Riyadh</td><td>12:45</td><td>C5</td><td><span class="status on-time">On Time</span></td></tr>
+<tr><td><span class="airline-badge SV">SV</span> Saudia</td><td>SV322</td><td>Dammam</td><td>13:05</td><td>D2</td><td><span class="status on-time">On Time</span></td></tr>
+
+<tr><td><span class="airline-badge FZ">FZ</span> flydubai</td><td>FZ251</td><td>Bahrain</td><td>13:20</td><td>E4</td><td><span class="status on-time">On Time</span></td></tr>
+<tr><td><span class="airline-badge GF">GF</span> Gulf Air</td><td>GF219</td><td>Manama</td><td>13:40</td><td>C6</td><td><span class="status on-time">On Time</span></td></tr>
+<tr><td><span class="airline-badge WY">WY</span> Oman Air</td><td>WY608</td><td>Salalah</td><td>14:00</td><td>A3</td><td><span class="status on-time">On Time</span></td></tr>
+<tr><td><span class="airline-badge ME">ME</span> MEA</td><td>ME409</td><td>Beirut</td><td>14:20</td><td>B5</td><td><span class="status delayed">Delayed</span></td></tr>
+<tr><td><span class="airline-badge MS">MS</span> EgyptAir</td><td>MS918</td><td>Alexandria</td><td>14:40</td><td>C8</td><td><span class="status on-time">On Time</span></td></tr>
+
+</table>
+
+</body>
+</html>
