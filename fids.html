@@ -4,7 +4,10 @@
 <meta charset="UTF-8">
 <title>Departures</title>
 
-<meta http-equiv="refresh" content="60">
+<!-- يمنع الكاش نهائياً -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
 
 <style>
     body { background: #001428; font-family: Arial; color: white; margin: 0; }
@@ -91,7 +94,7 @@
 const DATA_URL = "https://raw.githubusercontent.com/majdbawab/fids-data/main/flights.json";
 
 function loadFlights() {
-    fetch(DATA_URL)
+    fetch(DATA_URL + "?t=" + Date.now(), { cache: "no-store" })
         .then(res => res.json())
         .then(flights => {
             const table = document.getElementById("flights-table");
@@ -112,7 +115,8 @@ function loadFlights() {
                     </tr>
                 `;
             });
-        });
+        })
+        .catch(err => console.error("Error loading JSON", err));
 }
 
 function formatStatus(s) {
@@ -126,9 +130,10 @@ function formatStatus(s) {
 }
 
 loadFlights();
-setInterval(loadFlights, 60000);
+
+// تحديث كل 5 ثواني بدل 60 ثانية
+setInterval(loadFlights, 5000);
 </script>
 
 </body>
 </html>
-
