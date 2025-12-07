@@ -1,22 +1,164 @@
-[
-  {"airline":"QR","name":"Qatar Airways","flight":"QR404","dest":"Doha","time":"08:10","gate":"A12","status":"on-time"},
-  {"airline":"EK","name":"Emirates","flight":"EK202","dest":"Dubai","time":"08:35","gate":"B7","status":"boarding"},
-  {"airline":"EY","name":"Etihad","flight":"EY315","dest":"Abu Dhabi","time":"09:05","gate":"C3","status":"on-time"},
-  {"airline":"SV","name":"Saudia","flight":"SV820","dest":"Riyadh","time":"09:30","gate":"D4","status":"on-time"},
-  {"airline":"FZ","name":"flydubai","flight":"FZ141","dest":"Kuwait City","time":"09:45","gate":"E2","status":"delayed"},
-  {"airline":"WY","name":"Oman Air","flight":"WY602","dest":"Muscat","time":"10:05","gate":"A4","status":"on-time"},
-  {"airline":"KU","name":"Kuwait Airways","flight":"KU674","dest":"Kuwait City","time":"10:20","gate":"B3","status":"on-time"},
-  {"airline":"GF","name":"Gulf Air","flight":"GF215","dest":"Manama","time":"10:40","gate":"C1","status":"boarding"},
-  {"airline":"RJ","name":"Royal Jordanian","flight":"RJ115","dest":"Amman","time":"11:00","gate":"D1","status":"last-call"},
-  {"airline":"ME","name":"MEA","flight":"ME403","dest":"Beirut","time":"11:20","gate":"A6","status":"on-time"},
-  {"airline":"MS","name":"EgyptAir","flight":"MS912","dest":"Cairo","time":"11:40","gate":"C7","status":"delayed"},
-  {"airline":"QR","name":"Qatar Airways","flight":"QR812","dest":"Doha","time":"12:05","gate":"A10","status":"on-time"},
-  {"airline":"EK","name":"Emirates","flight":"EK732","dest":"Jeddah","time":"12:20","gate":"B2","status":"boarding"},
-  {"airline":"EY","name":"Etihad","flight":"EY417","dest":"Riyadh","time":"12:45","gate":"C5","status":"on-time"},
-  {"airline":"SV","name":"Saudia","flight":"SV322","dest":"Dammam","time":"13:05","gate":"D2","status":"on-time"},
-  {"airline":"FZ","name":"flydubai","flight":"FZ251","dest":"Bahrain","time":"13:20","gate":"E4","status":"on-time"},
-  {"airline":"GF","name":"Gulf Air","flight":"GF219","dest":"Manama","time":"13:40","gate":"C6","status":"on-time"},
-  {"airline":"WY","name":"Oman Air","flight":"WY608","dest":"Salalah","time":"14:00","gate":"A3","status":"on-time"},
-  {"airline":"ME","name":"MEA","flight":"ME409","dest":"Beirut","time":"14:20","gate":"B5","status":"delayed"},
-  {"airline":"MS","name":"EgyptAir","flight":"MS918","dest":"Alexandria","time":"14:40","gate":"C8","status":"on-time"}
-]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+    body {
+        background: #001428;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #ffffff;
+    }
+
+    .header {
+        background: linear-gradient(to right, #003366, #0055a5);
+        padding: 22px;
+        text-align: center;
+        font-size: 32px;
+        font-weight: bold;
+        letter-spacing: 2px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 20px;
+        margin-top: 10px;
+    }
+
+    th {
+        background: #003366;
+        padding: 10px;
+        text-align: center;
+        color: #aad4ff;
+        border-bottom: 2px solid #0055a5;
+    }
+
+    td {
+        padding: 10px;
+        text-align: center;
+        border-bottom: 1px solid #004a80;
+    }
+
+    tr:nth-child(even) { background: #02223d; }
+    tr:nth-child(odd) { background: #012034; }
+
+    .airline-badge {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: #ffffff;
+        font-size: 18px;
+        margin-right: 8px;
+    }
+
+    .QR { background: #7a003c; }
+    .EK { background: #d71921; }
+    .EY { background: #b38b00; }
+    .SV { background: #006c35; }
+    .FZ { background: #ff6a00; }
+    .WY { background: #007c92; }
+    .KU { background: #004f9f; }
+    .GF { background: #c9a14a; }
+    .RJ { background: #a32035; }
+    .ME { background: #006f3e; }
+    .MS { background: #0b3c7c; }
+
+    .status {
+        font-weight: bold;
+        padding: 4px 10px;
+        border-radius: 999px;
+        display: inline-block;
+        font-size: 16px;
+    }
+
+    .on-time { color: #00ff9d; border: 1px solid #00ff9d; }
+    .delayed { color: #ff6b6b; border: 1px solid #ff6b6b; }
+    .boarding { color: #4db8ff; border: 1px solid #4db8ff; }
+    .last-call { color: #ffd166; border: 1px solid #ffd166; }
+
+</style>
+</head>
+<body>
+
+<div class="header">DEPARTURES</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Airline</th>
+            <th>Flight</th>
+            <th>Destination</th>
+            <th>Time</th>
+            <th>Gate</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody id="flights-body"></tbody>
+</table>
+
+<script>
+// -----------------------------
+//  DYNAMIC FLIGHT DATA SECTION
+// -----------------------------
+const flights = [
+    { airline:"QR", name:"Qatar Airways", flight:"QR404", dest:"Doha", time:"08:10", gate:"A12", status:"on-time" },
+    { airline:"EK", name:"Emirates", flight:"EK202", dest:"Dubai", time:"08:35", gate:"B7", status:"boarding" },
+    { airline:"EY", name:"Etihad", flight:"EY315", dest:"Abu Dhabi", time:"09:05", gate:"C3", status:"on-time" },
+    { airline:"SV", name:"Saudia", flight:"SV820", dest:"Riyadh", time:"09:30", gate:"D4", status:"on-time" },
+    { airline:"FZ", name:"flydubai", flight:"FZ141", dest:"Kuwait City", time:"09:45", gate:"E2", status:"delayed" },
+    { airline:"WY", name:"Oman Air", flight:"WY602", dest:"Muscat", time:"10:05", gate:"A4", status:"on-time" },
+    { airline:"KU", name:"Kuwait Airways", flight:"KU674", dest:"Kuwait City", time:"10:20", gate:"B3", status:"on-time" },
+    { airline:"GF", name:"Gulf Air", flight:"GF215", dest:"Manama", time:"10:40", gate:"C1", status:"boarding" },
+    { airline:"RJ", name:"Royal Jordanian", flight:"RJ115", dest:"Amman", time:"11:00", gate:"D1", status:"last-call" },
+    { airline:"ME", name:"MEA", flight:"ME403", dest:"Beirut", time:"11:20", gate:"A6", status:"on-time" },
+    { airline:"MS", name:"EgyptAir", flight:"MS912", dest:"Cairo", time:"11:40", gate:"C7", status:"delayed" },
+    { airline:"QR", name:"Qatar Airways", flight:"QR812", dest:"Doha", time:"12:05", gate:"A10", status:"on-time" },
+    { airline:"EK", name:"Emirates", flight:"EK732", dest:"Jeddah", time:"12:20", gate:"B2", status:"boarding" },
+    { airline:"EY", name:"Etihad", flight:"EY417", dest:"Riyadh", time:"12:45", gate:"C5", status:"on-time" },
+    { airline:"SV", name:"Saudia", flight:"SV322", dest:"Dammam", time:"13:05", gate:"D2", status:"on-time" },
+    { airline:"FZ", name:"flydubai", flight:"FZ251", dest:"Bahrain", time:"13:20", gate:"E4", status:"on-time" },
+    { airline:"GF", name:"Gulf Air", flight:"GF219", dest:"Manama", time:"13:40", gate:"C6", status:"on-time" },
+    { airline:"WY", name:"Oman Air", flight:"WY608", dest:"Salalah", time:"14:00", gate:"A3", status:"on-time" },
+    { airline:"ME", name:"MEA", flight:"ME409", dest:"Beirut", time:"14:20", gate:"B5", status:"delayed" },
+    { airline:"MS", name:"EgyptAir", flight:"MS918", dest:"Alexandria", time:"14:40", gate:"C8", status:"on-time" }
+];
+
+// -----------------------------
+//  BUILD TABLE DYNAMICALLY
+// -----------------------------
+const tbody = document.getElementById("flights-body");
+
+flights.forEach(f => {
+    tbody.innerHTML += `
+        <tr>
+            <td>
+                <span class="airline-badge ${f.airline}">${f.airline}</span> ${f.name}
+            </td>
+            <td>${f.flight}</td>
+            <td>${f.dest}</td>
+            <td>${f.time}</td>
+            <td>${f.gate}</td>
+            <td><span class="status ${f.status}">${formatStatus(f.status)}</span></td>
+        </tr>
+    `;
+});
+
+function formatStatus(s) {
+    switch(s) {
+        case "on-time": return "On Time";
+        case "delayed": return "Delayed";
+        case "boarding": return "Boarding";
+        case "last-call": return "Last Call";
+        default: return s;
+    }
+}
+</script>
+
+</body>
+</html>
