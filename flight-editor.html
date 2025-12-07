@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FIDS Flight JSON Editor</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #0b1724;
+        color: #fff;
+        margin: 0;
+        padding: 20px;
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        background: #111c2b;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    }
+    .form-row {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+    label {
+        font-size: 12px;
+        display: block;
+        margin-bottom: 3px;
+        color: #a9c3ff;
+    }
+    input, select {
+        width: 100%;
+        padding: 6px 8px;
+        border-radius: 6px;
+        border: 1px solid #33445e;
+        background: #0b1523;
+        color: #fff;
+        font-size: 13px;
+    }
+    input:focus, select:focus {
+        outline: none;
+        border-color: #4b8bff;
+    }
+    button {
+        padding: 8px 16px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+        margin-right: 8px;
+    }
+    .btn-add {
+        background: #1abc9c;
+        color: #fff;
+    }
+    .btn-clear {
+        background: #e74c3c;
+        color: #fff;
+    }
+    .btn-copy {
+        background: #3498db;
+        color: #fff;
+        margin-top: 6px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        font-size: 13px;
+    }
+    th, td {
+        border: 1px solid #243347;
+        padding: 6px;
+        text-align: center;
+    }
+    th {
+        background: #18273a;
+        color: #c6dcff;
+    }
+    tr:nth-child(even) {
+        background: #141f31;
+    }
+    tr:nth-child(odd) {
+        background: #101a29;
+    }
+    textarea {
+        width: 100%;
+        height: 220px;
+        margin-top: 10px;
+        border-radius: 8px;
+        border: 1px solid #33445e;
+        background: #050b13;
+        color: #d7f0ff;
+        padding: 10px;
+        font-family: "Consolas", monospace;
+        font-size: 13px;
+        white-space: pre;
+    }
+    .small-note {
+        font-size: 12px;
+        color: #9bb5ff;
+        margin-top: 6px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>FIDS Flight JSON Editor</h1>
+    <p style="text-align:center;font-size:13px;color:#a9c3ff;">
+        ادخل الرحلات هنا، ثم انسخ الـ JSON وضعه في <b>flights.json</b> في GitHub.
+    </p>
+
+    <div class="form-row">
+        <div>
+            <label>Airline Code (QR / EK / EY...)</label>
+            <input id="airline" placeholder="QR">
+        </div>
+        <div>
+            <label>Airline Name</label>
+            <input id="name" placeholder="Qatar Airways">
+        </div>
+        <div>
+            <label>Flight No.</label>
+            <input id="flight" placeholder="QR404">
+        </div>
+        <div>
+            <label>Destination</label>
+            <input id="dest" placeholder="Doha">
+        </div>
+        <div>
+            <label>Time (HH:MM)</label>
+            <input id="time" placeholder="08:10">
+        </div>
+        <div>
+            <label>Gate</label>
+            <input id="gate" placeholder="A12">
+        </div>
+        <div>
+            <label>Status</label>
+            <select id="status">
+                <option value="on-time">On Time</option>
+                <option value="boarding">Boarding</option>
+                <option value="delayed">Delayed</option>
+                <option value="last-call">Last Call</option>
+            </select>
+        </div>
+    </div>
+
+    <div style="margin-bottom:10px;">
+        <button class="btn-add" onclick="addFlight()">+ Add Flight</button>
+        <button class="btn-clear" onclick="clearFlights()">Clear All Flights</button>
+        <span class="small-note" id="flightCountLabel">0 flights</span>
+    </div>
+
+    <table id="flightsTable">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Airline</th>
+                <th>Flight</th>
+                <th>Destination</th>
+                <th>Time</th>
+                <th>Gate</th>
+                <th>Status</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <div style="margin-top:15px;">
+        <label style="display:block;margin-bottom:4px;">Generated JSON (copy & paste into flights.json):</label>
+        <textarea id="jsonOutput" readonly></textarea>
+        <button class="btn-copy" onclick="copyJSON()">Copy JSON</button>
+        <div class="small-note">
+            بعد النسخ: افتح <b>flights.json</b> في GitHub → Edit → لصق → Commit.
+        </div>
+    </div>
+</div>
+
+<script>
+let flights = [];
+
+function updateUI() {
+    const tbody = document.querySelector("#flightsTable tbody");
+    tbody.innerHTML = "";
+    flights.forEach((f, index) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${f.airline} - ${f.name}</td>
+            <td>${f.flight}</td>
+            <td>${f.dest}</td>
+            <td>${f.time}</td>
+            <td>${f.gate}</td>
+            <td>${formatStatus(f.status)}</td>
+            <td><button style="background:#c0392b;color:#fff;border:none;border-radius:4px;padding:2px 6px;cursor:pointer;font-size:11px;" onclick="removeFlight(${index})">X</button></td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    document.getElementById("jsonOutput").value = JSON.stringify(flights, null, 2);
+    document.getElementById("flightCountLabel").textContent = flights.length + " flights";
+}
+
+function addFlight() {
+    const airline = document.getElementById("airline").value.trim();
+    const name    = document.getElementById("name").value.trim();
+    const flight  = document.getElementById("flight").value.trim();
+    const dest    = document.getElementById("dest").value.trim();
+    const time    = document.getElementById("time").value.trim();
+    const gate    = document.getElementById("gate").value.trim();
+    const status  = document.getElementById("status").value;
+
+    if (!airline || !name || !flight || !dest || !time || !gate) {
+        alert("املأ كل الحقول قبل الإضافة.");
+        return;
+    }
+
+    flights.push({ airline, name, flight, dest, time, gate, status });
+
+    // امسح الحقول للرحلة القادمة
+    document.getElementById("flight").value = "";
+    document.getElementById("dest").value = "";
+    document.getElementById("time").value = "";
+    document.getElementById("gate").value = "";
+
+    updateUI();
+}
+
+function removeFlight(index) {
+    flights.splice(index, 1);
+    updateUI();
+}
+
+function clearFlights() {
+    if (!confirm("هل أنت متأكد من حذف كل الرحلات؟")) return;
+    flights = [];
+    updateUI();
+}
+
+function copyJSON() {
+    const text = document.getElementById("jsonOutput").value;
+    if (!text.trim()) {
+        alert("لا يوجد JSON لنسخه.");
+        return;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert("تم نسخ JSON إلى الحافظة.");
+        }, () => {
+            fallbackCopy(text);
+        });
+    } else {
+        fallbackCopy(text);
+    }
+}
+
+function fallbackCopy(text) {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+        document.execCommand("copy");
+        alert("تم نسخ JSON إلى الحافظة.");
+    } catch (e) {
+        alert("لم يتم النسخ تلقائيًا، انسخ يدويًا.");
+    }
+    document.body.removeChild(textarea);
+}
+
+function formatStatus(status) {
+    switch (status) {
+        case "on-time": return "On Time";
+        case "boarding": return "Boarding";
+        case "delayed": return "Delayed";
+        case "last-call": return "Last Call";
+        default: return status;
+    }
+}
+</script>
+
+</body>
+</html>
