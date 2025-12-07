@@ -1,5 +1,5 @@
 [
-  {"airline":"QR","name":"Qatar Airways","flight":"QR404","dest":"Doha","time":"08:10","gate":"A12","status":"on-time"},
+  {"airline":"QR","name":"Qatar Airways","flight":"QR404","dest":"Doha","time":"10:10","gate":"A12","status":"on-time"},
   {"airline":"EK","name":"Emirates","flight":"EK202","dest":"Dubai","time":"08:35","gate":"B7","status":"boarding"},
   {"airline":"EY","name":"Etihad Airways","flight":"EY315","dest":"Abu Dhabi","time":"09:05","gate":"C3","status":"on-time"},
   {"airline":"SV","name":"Saudia","flight":"SV820","dest":"Riyadh","time":"09:30","gate":"D4","status":"on-time"},
