@@ -1,0 +1,24 @@
+[
+  {"airline":"QR","name":"Qatar Airways","flight":"QR404","dest":"Doha","time":"08:10","gate":"A12","status":"on-time"},
+  {"airline":"EK","name":"Emirates","flight":"EK202","dest":"Dubai","time":"08:35","gate":"B7","status":"boarding"},
+  {"airline":"EY","name":"Etihad Airways","flight":"EY315","dest":"Abu Dhabi","time":"09:05","gate":"C3","status":"on-time"},
+  {"airline":"SV","name":"Saudia","flight":"SV820","dest":"Riyadh","time":"09:30","gate":"D4","status":"on-time"},
+  {"airline":"FZ","name":"flydubai","flight":"FZ141","dest":"Kuwait City","time":"09:45","gate":"E2","status":"delayed"},
+  {"airline":"WY","name":"Oman Air","flight":"WY602","dest":"Muscat","time":"10:05","gate":"A4","status":"on-time"},
+  {"airline":"KU","name":"Kuwait Airways","flight":"KU674","dest":"Kuwait","time":"10:20","gate":"B3","status":"on-time"},
+  {"airline":"GF","name":"Gulf Air","flight":"GF215","dest":"Manama","time":"10:40","gate":"C1","status":"boarding"},
+  {"airline":"RJ","name":"Royal Jordanian","flight":"RJ115","dest":"Amman","time":"11:00","gate":"D1","status":"last-call"},
+  {"airline":"ME","name":"MEA","flight":"ME403","dest":"Beirut","time":"11:20","gate":"A6","status":"on-time"},
+
+  {"airline":"MS","name":"EgyptAir","flight":"MS912","dest":"Cairo","time":"11:40","gate":"C7","status":"delayed"},
+  {"airline":"QR","name":"Qatar Airways","flight":"QR812","dest":"Doha","time":"12:05","gate":"A10","status":"on-time"},
+  {"airline":"EK","name":"Emirates","flight":"EK732","dest":"Jeddah","time":"12:20","gate":"B2","status":"boarding"},
+  {"airline":"EY","name":"Etihad Airways","flight":"EY417","dest":"Riyadh","time":"12:45","gate":"C5","status":"on-time"},
+  {"airline":"SV","name":"Saudia","flight":"SV322","dest":"Dammam","time":"13:05","gate":"D2","status":"on-time"},
+
+  {"airline":"FZ","name":"flydubai","flight":"FZ251","dest":"Bahrain","time":"13:20","gate":"E4","status":"on-time"},
+  {"airline":"GF","name":"Gulf Air","flight":"GF219","dest":"Manama","time":"13:40","gate":"C6","status":"on-time"},
+  {"airline":"WY","name":"Oman Air","flight":"WY608","dest":"Salalah","time":"14:00","gate":"A3","status":"on-time"},
+  {"airline":"ME","name":"MEA","flight":"ME409","dest":"Beirut","time":"14:20","gate":"B5","status":"delayed"},
+  {"airline":"MS","name":"EgyptAir","flight":"MS918","dest":"Alexandria","time":"14:40","gate":"C8","status":"on-time"}
+]
